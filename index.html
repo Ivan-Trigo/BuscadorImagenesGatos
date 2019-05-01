@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Buscador de imagenes de gatos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.1/vue.min.js"></script>
+        <script src="js/scripts.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body class="container">
+        <h1>Busqueda de fotos de gatos</h1>
+        Selecciona una categoria 
+        <select id="categorias">
+        </select>
+        <input type="button" id="buscar" value="Buscar" >
+        <section id="app">
+            <!-- Resultados, vuelca 6 imagenes por pagina-->        
+            <div id="resultados" class="row">
+                <img v-for="(gato, index) in gatos" v-show="(pag - 1) * NUM_RESULTS <= index  && pag * NUM_RESULTS > index" :src="gato.url" style="float: left; height: 25%; padding: 10px;" >
+            </div>
+            <!-- Controles -->        
+            <nav aria-label="Page navigation" class="row nav justify-content-between" >
+                        <a href="#" class="nav-item btn btn-secondary" aria-label="Previous" v-if="pag != 1" @click.prevent="pag -= 1">
+                            <span aria-hidden="true">Anterior</span>
+                        </a>
+                        <a href="#" class="nav-item btn btn-secondary ml-auto" aria-label="Next" v-show="pag * NUM_RESULTS / gatos.length < 1" @click.prevent="pag += 1">
+                            <span aria-hidden="true">Siguiente</span>
+                        </a>
+            </nav>
+        </section>
+    </body>
+</html>

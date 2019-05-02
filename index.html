@@ -16,16 +16,9 @@
         <section id="app">
             <!-- Resultados, vuelca 6 imagenes por pagina-->        
             <div id="resultados" class="row">
-                <img v-for="(gato, index) in gatos" v-show="(pag - 1) * NUM_RESULTS <= index  && pag * NUM_RESULTS > index" :src="gato.url" style="float: left; height: 25%; padding: 10px;" >
             </div>
             <!-- Controles -->        
-            <nav aria-label="Page navigation" class="row nav justify-content-between" >
-                        <a href="#" class="nav-item btn btn-secondary" aria-label="Previous" v-if="pag != 1" @click.prevent="pag -= 1">
-                            <span aria-hidden="true">Anterior</span>
-                        </a>
-                        <a href="#" class="nav-item btn btn-secondary ml-auto" aria-label="Next" v-show="pag * NUM_RESULTS / gatos.length < 1" @click.prevent="pag += 1">
-                            <span aria-hidden="true">Siguiente</span>
-                        </a>
+            <nav id="paginacion" aria-label="Page navigation" class="row nav justify-content-between" >            
             </nav>
         </section>
     </body>

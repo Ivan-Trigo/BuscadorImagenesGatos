@@ -75,10 +75,32 @@ function cargarImagenes() {
         if (this.readyState==4 && this.status == 200) {
             var resultados = eval( '(' +this.responseText+ ')');
             var div = document.getElementById("resultados");
+            var nav = document.getElementById("paginacion");
+            
             //Borra las imagenes si ya estuvieran cargas
             div.innerHTML='<img v-for="(gato, index) in gatos" v-show="(pag - 1) * NUM_RESULTS <= index  && pag * NUM_RESULTS > index" :src="gato.url" style="float: left; height: 25%; padding: 10px;" >';
             
+            //Carga la barra de navegacion entre paginas
+            nav.innerHTML='<a href="#" class="nav-item btn btn-secondary" aria-label="Previous" v-if="pag != 1" @click.prevent="pag -= 1"><span aria-hidden="true">Anterior</span></a>\n\
+                    <a href="#" class="nav-item btn btn-secondary ml-auto" aria-label="Next" v-show="pag * NUM_RESULTS / gatos.length < 1" @click.prevent="pag += 1"><span aria-hidden="true">Siguiente</span></a>';
             //Carga las imagenes
+            new Vue({
+                el: '#app',
+                data: {
+                    NUM_RESULTS: 6, // Numero de resultados por página
+                    pag: 1, // Página inicial
+                    // JSON a mostrar
+                    gatos: resultados
+                }
+            });
+        }else if(this.readyState==4){
+            var div = document.getElementById("resultados");
+            div.innerHTML='<p class="alert alert-danger text-center col">Se ha producido un error recarge la pagina</p>';
+        }
+    });
+    xhr.send();
+    return xhr;
+}     //Carga las imagenes
             new Vue({
                 el: '#app',
                 data: {
